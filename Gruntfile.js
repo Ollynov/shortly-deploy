@@ -2,7 +2,14 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    
     concat: {
+      dist: {
+        src: [
+          'public/lib/*.js' // all JS files in public/lib
+        ],
+        dest: 'public/lib/production.js',
+      }
     },
 
     mochaTest: {
@@ -21,6 +28,10 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      build: {
+        src: 'public/lib/production.js',
+        dest: 'public/lib/production.min.js'
+      }
     },
 
     eslint: {
@@ -30,6 +41,13 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      target: {
+        files: [
+          {//expand: true,
+            src: 'public/style.css',
+            dest: 'public/style.min.css'
+          }]
+      }
     },
 
     watch: {
@@ -64,7 +82,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('server-dev', function (target) {
+  grunt.registerTask('default', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
   });
 
@@ -77,6 +95,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'concat', 'uglify', 'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
