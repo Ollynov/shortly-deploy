@@ -6,7 +6,11 @@ module.exports = function(grunt) {
     concat: {
       dist: {
         src: [
-          'public/lib/*.js' // all JS files in public/lib
+          'public/lib/jquery.js',
+          'public/lib/underscore.js',
+          'public/lib/backbone.js', 
+          'public/lib/handlebars.js', 
+           // all JS files in public/lib
         ],
         dest: 'public/lib/production.js',
       }
@@ -37,6 +41,8 @@ module.exports = function(grunt) {
     eslint: {
       target: [
         // Add list of files to lint here
+        'server.js',
+        'server-config.js', 
       ]
     },
 
@@ -107,6 +113,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('deploy', [
+    'eslint', 'build'
     // add your deploy tasks here
   ]);
 
