@@ -75,8 +75,25 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push live master',
+        options: {
+          stderr: true
+        }
       }
     },
+
+   /* compass: {
+      production: {
+        options: {
+          // shell
+        },
+      },
+      local: {
+        options: {
+
+        },
+      },
+    },*/
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -87,6 +104,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  // grunt.loadNpmTasks('grunt-cli');
 
   grunt.registerTask('default', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
@@ -106,14 +124,17 @@ module.exports = function(grunt) {
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
-      // add your production server task here
+      grunt.task.run(['shell:prodServer']);
     } else {
-      grunt.task.run([ 'server-dev' ]);
+      grunt.task.run([ 'default' ]);
     }
   });
-
+  
+  var target = grunt.option('target') || 'local';
+  
   grunt.registerTask('deploy', [
-    'eslint', 'build'
+    'eslint', 'build', 'upload'
+    // , ['compass:' + target]
     // add your deploy tasks here
   ]);
 
