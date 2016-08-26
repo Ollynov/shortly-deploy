@@ -82,18 +82,6 @@ module.exports = function(grunt) {
       }
     },
 
-   /* compass: {
-      production: {
-        options: {
-          // shell
-        },
-      },
-      local: {
-        options: {
-
-        },
-      },
-    },*/
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -104,7 +92,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
-  // grunt.loadNpmTasks('grunt-cli');
 
   grunt.registerTask('default', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
